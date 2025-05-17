@@ -4,6 +4,7 @@
 
 > Código simples para exemplificar
 > como criar uma instancia ec2 na AWS.
+> UTILIZANDO VERSÃO BETA DO AWS PROVIDER
 
 
 ## Installation
