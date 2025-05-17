@@ -1,5 +1,21 @@
+terraform {
+  required_version = "~> 1.12.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.98.0"
+    }
+  }
+}
+
 provider "aws" {
-  region     = var.region
-  access_key = ""
-  secret_key = ""
+  region = var.region
+
+  default_tags {
+    tags = {
+      "owner"       = "Paulo Xavier"
+      "Provisioner" = "Terraform"
+    }
+  }
 }
