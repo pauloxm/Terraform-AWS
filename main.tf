@@ -1,0 +1,3 @@
+module "server" {
+  source           = "./module"
+}
