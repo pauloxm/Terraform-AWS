@@ -1,3 +1,7 @@
+module "bucket" {
+  source = "./module/bucket"
+}
+
 module "server" {
-  source           = "./module"
+  source = "./module/instance"
 }

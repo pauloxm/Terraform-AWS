@@ -11,9 +11,23 @@ data "aws_ami" "ubuntu" {
 
 }
 
+resource "tls_private_key" "private_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+  #algorithm = "ED25519"
+}
+
 resource "aws_key_pair" "key-pair" {
-  key_name   = var.private_key
-  public_key = file("${var.private_key_path}/${var.public_key}")
+  key_name   = var.key_name
+  public_key = tls_private_key.private_key.public_key_openssh
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo '${tls_private_key.private_key.private_key_pem}' > '${var.private_key_path}/${var.private_key}' 
+      chmod 400 '${var.private_key_path}/${var.private_key}'
+    EOT
+  }
+
 }
 
 resource "aws_instance" "server" {
@@ -40,7 +54,7 @@ resource "null_resource" "connect_ansible_hosts" {
   connection {
     type        = "ssh"
     user        = var.ssh_user
-    private_key = file("${var.private_key_path}/${var.private_key}")
+    private_key = tls_private_key.private_key.private_key_pem
     host        = aws_instance.server.public_ip
   }
   provisioner "remote-exec" {

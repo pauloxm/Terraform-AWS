@@ -23,21 +23,27 @@ variable "repo" {
   default     = "https://github.com/pauloxm/Terraform-AWS"
 }
 
-#################################################################################################
-
 variable "ssh_user" {
+  description = "Usuario criado na Instancia ec2"
   default = "ubuntu"
 }
+
+variable "key_name" {
+  description = "Nome da chave SSH criada na AWS"
+  default = "chaves-aws"
+}
+
 variable "private_key" {
+  description = "Nome da parte privada da chave SSH criada na AWS"
   default = "aws-key"
 }
 
 variable "public_key" {
+  description = "Nome da parte publica da chave SSH criada na AWS"
   default = "aws-key.pub"
 }
 
 variable "private_key_path" {
-  default = "/home/pauloxmachado/Git/Terraform/Terraform-AWS/certs"
+  description = "Caminho local onde será armazenada e buscada a chave privada"
+  default = "certs"
 }
-
-#################################################################################################
