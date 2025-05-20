@@ -21,5 +21,4 @@ jobs:
         env:
           aws-region: ${{ secrets.AWS_REGION }}
         run: |
-          echo "Valores"
-          echo ${{ secrets.AWS_REGION }}
+          echo "AWS_REGION: ${{ secrets.AWS_REGION }}"
