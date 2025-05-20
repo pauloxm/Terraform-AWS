@@ -13,9 +13,9 @@ jobs:
     name: Terraform Apply
     runs-on: ubuntu-latest
 
-steps:
-  - shell: bash
-    env:
-      aws-region: ${{ secrets.AWS_REGION }}
-    run: |
-      echo"$aws-region"
+    steps:
+      - shell: bash
+        env:
+          aws-region: ${{ secrets.AWS_REGION }}
+        run: |
+          echo "$aws-region"
