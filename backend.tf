@@ -7,6 +7,12 @@ terraform {
       version = "5.98.0"
     }
   }
+
+  backend "remote-state-s3"{
+    bucket = "prxm-remote-state"
+    key = "instance/terraform.tfstate"
+    region = "sa-east-1"
+  }
 }
 
 provider "aws" {
