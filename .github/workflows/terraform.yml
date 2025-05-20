@@ -1,0 +1,41 @@
+name: Terraform e Ansible na AWS
+
+on:
+  push:
+    branches:
+      - main # Execute este workflow quando houver push na branch principal
+  pull_request:
+    branches:
+      - main # Execute este workflow quando houver pull request para a branch principal
+
+jobs:
+  plan_apply:
+    name: Terraform Plan e Apply & Ansible Provisioning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+#      - name: Configurar Ansible
+#        uses: dawidd6/action-setup-python@v3
+#        with:
+#          python-version: '3.x'
+#      - run: pip install ansible-core==2.10.8
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.0
+
+      - name: Inicializar Terraform
+        run: terraform init
+
+      - name: Validar Terraform
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
