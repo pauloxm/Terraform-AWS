@@ -38,6 +38,9 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Create certs
+        run: mkdir certs
+
       - name: Terraform Validate
         run: terraform validate -no-color
 
