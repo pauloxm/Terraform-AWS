@@ -1,0 +1,21 @@
+name: Terraform AWS Provisioning
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+
+steps:
+  - shell: bash
+    env:
+      aws-region: ${{ secrets.AWS_REGION }}
+    run: |
+      echo"$aws-region"
