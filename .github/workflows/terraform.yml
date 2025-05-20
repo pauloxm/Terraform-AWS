@@ -52,5 +52,5 @@ jobs:
 
       - name: Terraform Destroy (opcional - para limpeza)
         id: destroy
-        if: github.event_name == 'workflow_dispatch' # Permite execução manual para destruir!!!
+        if: github.event_name == 'workflow_dispatch' # Permite execução manual para destruir!
         run: terraform destroy -auto-approve -input=false
