@@ -14,8 +14,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - shell: bash
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Debug Environment Variables
         env:
           aws-region: ${{ secrets.AWS_REGION }}
         run: |
-          echo "$aws-region"
+          echo "Valores"
+          echo ${{ secrets.AWS_REGION }}
