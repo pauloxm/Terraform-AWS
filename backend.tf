@@ -8,9 +8,9 @@ terraform {
     }
   }
 
-  backend "remote-state-s3"{
+  backend "s3" {
     bucket = "prxm-remote-state"
-    key = "instance/terraform.tfstate"
+    key    = "instance/terraform.tfstate"
     region = "sa-east-1"
   }
 }
