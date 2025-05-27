@@ -25,25 +25,25 @@ variable "repo" {
 
 variable "ssh_user" {
   description = "Usuario criado na Instancia ec2"
-  default = "ubuntu"
+  default     = "ubuntu"
 }
 
 variable "key_name" {
   description = "Nome da chave SSH criada na AWS"
-  default = "chaves-aws"
+  default     = "chaves-aws"
 }
 
 variable "private_key" {
   description = "Nome da parte privada da chave SSH criada na AWS"
-  default = "aws-key"
+  default     = "aws-key"
 }
 
 variable "public_key" {
   description = "Nome da parte publica da chave SSH criada na AWS"
-  default = "aws-key.pub"
+  default     = "aws-key.pub"
 }
 
 variable "private_key_path" {
   description = "Caminho local onde será armazenada e buscada a chave privada"
-  default = "certs"
+  default     = "certs"
 }
