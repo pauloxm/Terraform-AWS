@@ -6,17 +6,17 @@ env:
   AWS_REGION: ${{secrets.AWS_REGION}}
   TF_VERSION: ${{secrets.TF_VERSION}}
 
-  jobs:
-    terraform_Destroy:
-    name: Terraform Destroy
-    runs_on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Terraform Destroy
-      run: |
-        terraform init
-        terraform destroy -auto-approve -input=false
+jobs:
+  terraform_Destroy:
+  name: Terraform Destroy
+  runs_on: ubuntu-latest
+  defaults:
+    run:
+      shell: bash
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v4
+  - name: Terraform Destroy
+    run: |
+      terraform init
+      terraform destroy -auto-approve -input=false

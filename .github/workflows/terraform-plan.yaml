@@ -6,18 +6,18 @@ env:
   AWS_REGION: ${{secrets.AWS_REGION}}
   TF_VERSION: ${{secrets.TF_VERSION}}
 
-  jobs:
-    terraform_Plan:
-    name: Terraform Plan
-    runs_on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Terraform Plan
-      run: |
-        terraform init
-        terraform validate
-        terraform plan
+jobs:
+  terraform_Plan:
+  name: Terraform Plan
+  runs_on: ubuntu-latest
+  defaults:
+    run:
+      shell: bash
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v4
+  - name: Terraform Plan
+    run: |
+      terraform init
+      terraform validate
+      terraform plan

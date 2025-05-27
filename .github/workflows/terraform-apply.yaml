@@ -6,17 +6,17 @@ env:
   AWS_REGION: ${{secrets.AWS_REGION}}
   TF_VERSION: ${{secrets.TF_VERSION}}
 
-  jobs:
-    terraform_Apply:
-    name: Terraform Apply
-    runs_on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Terraform Apply
-      run: |
-        terraform init
-        terraform apply -auto-approve -input=false
+jobs:
+  terraform_Apply:
+  name: Terraform Apply
+  runs_on: ubuntu-latest
+  defaults:
+    run:
+      shell: bash
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v4
+  - name: Terraform Apply
+    run: |
+      terraform init
+      terraform apply -auto-approve -input=false
