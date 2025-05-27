@@ -1,5 +1,7 @@
 name: Terraform Apply
+
 on: workflow_dispatch
+
 env:
   AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
   AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
@@ -7,16 +9,18 @@ env:
   TF_VERSION: ${{secrets.TF_VERSION}}
 
 jobs:
-  terraform_Apply:
-  name: Terraform Apply
-  runs_on: ubuntu-latest
-  defaults:
-    run:
-      shell: bash
-  steps:
-  - name: Checkout
-    uses: actions/checkout@v4
-  - name: Terraform Apply
-    run: |
-      terraform init
-      terraform apply -auto-approve -input=false
+  terraform_apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Terraform Apply
+      run: |
+        terraform init
+        terraform apply -auto-approve -input=false
