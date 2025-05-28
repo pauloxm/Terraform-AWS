@@ -8,11 +8,11 @@ terraform {
     }
   }
 
-  #backend "s3" {
-  #  bucket = "prxm-remote-state"
-  #  key    = "instance/terraform.tfstate"
-  #  region = "sa-east-1"
-  #}
+  backend "s3" {
+    bucket = "prxm-remote-state"
+    key    = "instance/terraform.tfstate"
+    region = "sa-east-1"
+  }
 }
 
 provider "aws" {
