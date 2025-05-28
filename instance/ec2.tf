@@ -50,21 +50,21 @@ resource "aws_instance" "server" {
 #################################################### NULL RESOURCE FOR ANSIBLE ####################################################
 ###################################################################################################################################
 
-#resource "null_resource" "connect_ansible_hosts" {
-#  connection {
-#    type        = "ssh"
-#    user        = var.ssh_user
-#    private_key = tls_private_key.private_key.private_key_pem
-#    host        = aws_instance.server.public_ip
-#  }
-#  provisioner "remote-exec" {
-#    inline = [
-#      "echo 'SSH disponível para conexão remota...'"
-#    ]
-#  }
-#  #Execute the ansible command form local system
-#  provisioner "local-exec" {
-#    command = "ansible-playbook -i ${aws_instance.server.public_ip}, --private-key ${var.private_key_path}/${var.private_key} playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-#  }
-#}
+resource "null_resource" "connect_ansible_hosts" {
+  connection {
+    type        = "ssh"
+    user        = var.ssh_user
+    private_key = tls_private_key.private_key.private_key_pem
+    host        = aws_instance.server.public_ip
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'SSH disponível para conexão remota...'"
+    ]
+  }
+  #Execute the ansible command form local system
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ${aws_instance.server.public_ip}, --private-key ${var.private_key_path}/${var.private_key} playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+  }
+}
 ###################################################################################################################################
