@@ -47,3 +47,25 @@ variable "private_key_path" {
   description = "Caminho local onde será armazenada e buscada a chave privada"
   default     = "certs"
 }
+
+variable "ports" {
+  description = "Portas Ingress"
+  type = map(object({
+    description = string
+    cidr_blocks = list(string)
+  }))
+  default = {
+    22 = {
+      description = "Porta 22"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    80 = {
+      description = "Porta 80"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    443 = {
+      description = "Porta 443"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-resource "aws_vpc" "minha-vpc" {
+resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
@@ -6,8 +6,8 @@ resource "aws_vpc" "minha-vpc" {
   }
 }
 
-resource "aws_subnet" "minha-subnet" {
-  vpc_id     = aws_vpc.minha-vpc.id
+resource "aws_subnet" "subnet" {
+  vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.0.0.0/24"
 
   tags = {
@@ -15,20 +15,20 @@ resource "aws_subnet" "minha-subnet" {
   }
 }
 
-resource "aws_internet_gateway" "minha-internet_gateway" {
-  vpc_id = aws_vpc.minha-vpc.id
+resource "aws_internet_gateway" "internet_gateway" {
+  vpc_id = aws_vpc.vpc.id
 
   tags = {
     Name = "internet-gateway-terraform"
   }
 }
 
-resource "aws_route_table" "minha-route_table" {
-  vpc_id = aws_vpc.minha-vpc.id
+resource "aws_route_table" "route_table" {
+  vpc_id = aws_vpc.vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.minha-internet_gateway.id
+    gateway_id = aws_internet_gateway.internet_gateway.id
   }
 
   tags = {
@@ -36,47 +36,35 @@ resource "aws_route_table" "minha-route_table" {
   }
 }
 
-resource "aws_route_table_association" "minha-route_table_association" {
-  subnet_id      = aws_subnet.minha-subnet.id
-  route_table_id = aws_route_table.minha-route_table.id
+resource "aws_route_table_association" "route_table_association" {
+  subnet_id      = aws_subnet.subnet.id
+  route_table_id = aws_route_table.route_table.id
 }
 
-resource "aws_security_group" "minha-security_group" {
+resource "aws_security_group" "security_group" {
   name        = "security-group-devops"
   description = "Declara regras de acesso"
-  vpc_id      = aws_vpc.minha-vpc.id
+  vpc_id      = aws_vpc.vpc.id
+
+  dynamic "ingress" {
+    for_each = var.ports
+
+    content {
+      description = ingress.value.description
+      from_port   = ingress.key
+      to_port     = ingress.key
+      protocol    = "tcp"
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
 
   tags = {
     Name = "security-group-terraform"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "minha-ingress_rule_ipv4_ssh" {
-  security_group_id = aws_security_group.minha-security_group.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 22
-  ip_protocol       = "tcp"
-  to_port           = 22
-}
-
-resource "aws_vpc_security_group_ingress_rule" "minha-ingress_rule_ipv4_http" {
-  security_group_id = aws_security_group.minha-security_group.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 80
-  ip_protocol       = "tcp"
-  to_port           = 80
-}
-
-resource "aws_vpc_security_group_ingress_rule" "minha-ingress_rule_ipv4_https" {
-  security_group_id = aws_security_group.minha-security_group.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 443
-  ip_protocol       = "tcp"
-  to_port           = 443
-}
-
-resource "aws_vpc_security_group_egress_rule" "minha-egress_rule_ipv4" {
-  security_group_id = aws_security_group.minha-security_group.id
+resource "aws_vpc_security_group_egress_rule" "egress_rule_ipv4" {
+  security_group_id = aws_security_group.security_group.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }

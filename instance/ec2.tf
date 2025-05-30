@@ -24,7 +24,7 @@ resource "aws_key_pair" "key-pair" {
   provisioner "local-exec" {
     command = <<-EOT
       echo '${tls_private_key.private_key.private_key_pem}' > '${var.private_key_path}/${var.private_key}' 
-      chmod 400 '${var.private_key_path}/${var.private_key}'
+      chmod 600 '${var.private_key_path}/${var.private_key}'
     EOT
   }
 
@@ -34,8 +34,8 @@ resource "aws_instance" "server" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.key-pair.key_name
-  subnet_id                   = aws_subnet.minha-subnet.id
-  vpc_security_group_ids      = [aws_security_group.minha-security_group.id]
+  subnet_id                   = aws_subnet.subnet.id
+  vpc_security_group_ids      = [aws_security_group.security_group.id]
   associate_public_ip_address = true
 
   tags = {

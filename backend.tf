@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket = "prxm-remote-state"
-    key    = "instance/terraform.tfstate"
+    key    = "instance-local/terraform.tfstate"
     region = "sa-east-1"
   }
 }
